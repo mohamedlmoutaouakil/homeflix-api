@@ -8,31 +8,10 @@ servers:
   - url: http://localhost:5000
     description: Local developement server
 paths:
-  /medias:
-    get:
-      summary: Return a list of all movies
-      operationId: src.medias.read
-      responses:
-        '200': # status code
-          description: A json array of media objects
-          content:
-            application/json:
-              schema: 
-                type: array
-                items:
-                  $ref: '#/components/schemas/Media'
-        '400':
-          description: Bad request. Media ID must be an integer and larger than 0.
-        '401':
-          description: Authorization information is missing or invalid.
-        '404':
-          description: A media with the specified ID was not found.
-        '5XX':
-          description: Unexpected error.
   /medias/{media_id}:
     get:
       summary: Return a media by id.
-      operationId: src.medias.get_media
+      operationId: src.medias.media_by_id
       parameters:
         - in: path
           name: media_id
@@ -56,19 +35,21 @@ paths:
           description: A media with the specified ID was not found.
         '5XX':
           description: Unexpected error.
-  /medias/{media_type}:
+  /medias:
     get:
       summary: Return a list of media objects based on media type provided.
-      operationId: src.medias.get_media_by_type
+      operationId: src.medias.medias_by_type
       parameters:
-        - in: path
+        - in: query
           name: media_type
           schema:
             type: string
             enum:
+              - all
               - movies
               - series
               - animes
+            default: all
           description: The type of medias to returns
       responses:
         '200': # status code
@@ -122,8 +103,10 @@ components:
       properties:
         source:
           type: string
+          example: 'Rotten Tomatoes'
         value: 
           type: string
+          example: '94%'
 
     Media:
       type: object
@@ -136,60 +119,53 @@ components:
           example: 'The Dark Knight'
         rated:
           type: string
-          example: PG-13
+          example: 'PG-13'
         year: 
           type: integer
           example: 2008
         released:
           type: string
-          example: 18 Jul 2008
+          example: '18 Jul 2008'
         runtime:
           type: string
-          example: 152 min
+          example: '152 min'
         genre: 
           type: string
-          example: Action, Crime, Drama, Thriller
+          example: 'Action, Crime, Drama, Thriller'
         director:
           type: string
-          example: Christopher Nolan
+          example: 'Christopher Nolan'
         writer:
           type: string
-          example: Jonathan Nolan (screenplay), Christopher Nolan (screenplay), Christopher Nolan (story), David S. Goyer (story), Bob Kane (characters)
+          example: 'Jonathan Nolan (screenplay), Christopher Nolan (screenplay), Christopher Nolan (story), David S. Goyer (story), Bob Kane (characters)'
         actors:
           type: string
-          example: Christian Bale, Heath Ledger, Aaron Eckhart, Michael Caine
+          example: 'Christian Bale, Heath Ledger, Aaron Eckhart, Michael Caine'
         plot:
           type: string
-          example: When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.
+          example: 'When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.'
         language:
           type: string
-          example: English, Mandarin
+          example: 'English, Mandarin'
         country:
           type: string
-          example: USA, UK
+          example: 'USA, UK'
         awards:
           type: string
-          example: Won 2 Oscars. Another 153 wins & 160 nominations.
+          example: 'Won 2 Oscars. Another 153 wins & 160 nominations.'
         poster:
           type: string
-          example: https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg
+          example: 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg'
         ratings:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Rating'
-            example:
-            - {
-              source: Rotten Tomatoes,
-              value: 94%
-            }
+          type: array
+          items:
+            $ref: '#/components/schemas/Rating'
         imdbRating:
           type: number
           example: 9.0
-        type:
-          schema:
-            type: string
-            enum:
-              - movies
-              - series
-              - animes
+        mediaType:
+          type: string
+          enum:
+            - movies
+            - series
+            - animes
