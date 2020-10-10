@@ -1,7 +1,11 @@
+from src.media_gallery_manager import fetch_medias
 from flask import Flask
 import connexion
+from flask_cors import CORS
 
 def create_app():
+    new_medias_count = fetch_medias('D:\movies')
+    print(str(new_medias_count) + ' new medias found.')
     # Create flask application instance
     connex_app = connexion.App(__name__, specification_dir='../openapi/')
 
@@ -9,4 +13,8 @@ def create_app():
     connex_app.add_api('specifications.yml')
     
     app = connex_app.app
+    
+    app.config['CORS_HEADERS'] = 'Content-Type'
+    cors = CORS(app, resources={r"/medias": {"origins": "*"}})
+    
     return app

@@ -121,8 +121,8 @@ components:
           type: string
           example: 'PG-13'
         year: 
-          type: integer
-          example: 2008
+          type: string
+          example: '2008'
         released:
           type: string
           example: '18 Jul 2008'
@@ -161,8 +161,8 @@ components:
           items:
             $ref: '#/components/schemas/Rating'
         imdbRating:
-          type: number
-          example: 9.0
+          type: string
+          example: '9.0'
         mediaType:
           type: string
           enum:
