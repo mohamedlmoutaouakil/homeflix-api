@@ -3,3 +3,6 @@ class NotFoundException(Exception):
 
 class WrongMediaTypeException(Exception):
     pass
+
+class InvalidMediaObjectException(Exception):
+    pass
