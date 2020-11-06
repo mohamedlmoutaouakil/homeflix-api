@@ -15,6 +15,8 @@ Then start the virtual environment:
 pipenv shell
 ```
 ## Starting the server
+Before starting the homeflix-api server, you have to start the streaming server: https://github.com/mohamedlmoutaouakil/homeflix-streaming-server
+
 Now you can start the server. To do so, run the following command:
 ```
 python wsgi.py
