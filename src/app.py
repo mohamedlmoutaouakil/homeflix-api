@@ -4,7 +4,8 @@ import connexion
 from flask_cors import CORS
 
 def create_app():
-    new_medias_count = fetch_medias('D:\movies')
+    media_dirpath = input('Enter the path to your media directory (Example : D:\dirs\media) :')
+    new_medias_count = fetch_medias(media_dirpath)
     print(str(new_medias_count) + ' new medias found.')
     # Create flask application instance
     connex_app = connexion.App(__name__, specification_dir='../openapi/')
