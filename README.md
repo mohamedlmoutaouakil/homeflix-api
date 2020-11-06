@@ -22,3 +22,5 @@ python wsgi.py
 and then it will ask to provide the absolute path to your media directory.
 
 Once the server is running you check the swagger documentation to see the REST operations provided by this application in: http://localhost:5000/ui
+
+Now go ahead and start the homeflix React app : https://github.com/mohamedlmoutaouakil/homeflix
